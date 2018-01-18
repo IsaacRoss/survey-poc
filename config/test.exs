@@ -9,11 +9,20 @@ config :surveys, SurveysWeb.Endpoint,
 # Print only warnings and errors during test
 config :logger, level: :warn
 
+# Configure the event store database
+config :eventstore, EventStore.Storage,
+  serializer: Commanded.Serialization.JsonSerializer,
+  username: "postgres",
+  password: "postgres",
+  database: "surveys_eventstore_test",
+  hostname: "localhost",
+  pool_size: 1
+
 # Configure your database
 config :surveys, Surveys.Repo,
   adapter: Ecto.Adapters.Postgres,
   username: "postgres",
   password: "postgres",
-  database: "surveys_test",
+  database: "surveys_readstore_test",
   hostname: "localhost",
-  pool: Ecto.Adapters.SQL.Sandbox
+  pool_size: 1
