@@ -1,7 +1,7 @@
 defmodule Surveys.Authoring.Commands.CreateSurvey do
-  defstruct survey_uuid: "",
+  defstruct uuid: "",
             title: "",
-            questions: %{}
+            questions: []
 
   use ExConstructor
 end
@@ -9,7 +9,7 @@ end
 defmodule Surveys.Authoring.Events.SurveyCreated do
   @derive [Poison.Encoder]
   defstruct [
-    :survey_uuid,
+    :uuid,
     :title,
     :questions
   ]
@@ -18,30 +18,30 @@ end
 defmodule Surveys.Router do
   use Commanded.Commands.Router
 
-  alias Surveys.Authoring.Aggregates.SurveyDraft
+  alias Surveys.Authoring.Aggregates.Survey
   alias Surveys.Authoring.Commands.CreateSurvey
 
   dispatch(
     [
       CreateSurvey
     ],
-    to: SurveyDraft,
-    identity: :survey_uuid
+    to: Survey,
+    identity: :uuid
   )
 end
 
-defmodule Surveys.Authoring.Projectors.SurveyDraft do
+defmodule Surveys.Authoring.Projectors.Survey do
   use Commanded.Projections.Ecto,
-    name: "Authoring.Projectors.SurveyDraft",
+    name: "Authoring.Projectors.Survey",
     repo: Surveys.Repo,
     consistency: :strong
 
   alias Surveys.Authoring.Events.SurveyCreated
-  alias Surveys.Authoring.Projections.SurveyDraft
+  alias Surveys.Authoring.Projections.Survey
 
   project %SurveyCreated{} = created do
-    Ecto.Multi.insert(multi, :surveydraft, %SurveyDraft{
-      uuid: created.survey_uuid,
+    Ecto.Multi.insert(multi, :survey, %Survey{
+      uuid: created.uuid,
       title: created.title,
       questions: created.questions
     })

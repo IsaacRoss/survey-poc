@@ -1,30 +1,30 @@
-defmodule Surveys.Authoring.Aggregates.SurveyDraft do
+defmodule Surveys.Authoring.Aggregates.Survey do
   defstruct [
     :uuid,
     :title,
     :questions
   ]
 
-  alias Surveys.Authoring.Aggregates.SurveyDraft
+  alias Surveys.Authoring.Aggregates.Survey
   alias Surveys.Authoring.Commands.CreateSurvey
   alias Surveys.Authoring.Events.SurveyCreated
 
   @doc """
   Create a new survey draft
   """
-  def execute(%SurveyDraft{uuid: nil}, %CreateSurvey{} = create) do
+  def execute(%Survey{uuid: nil}, %CreateSurvey{} = create) do
     %SurveyCreated{
-      survey_uuid: create.survey_uuid,
+      uuid: create.uuid,
       title: create.title,
       questions: create.questions
     }
   end
 
   # Mutate existing draft state
-  def apply(%SurveyDraft{} = survey, %SurveyCreated{} = created) do
-    %SurveyDraft{
+  def apply(%Survey{} = survey, %SurveyCreated{} = created) do
+    %Survey{
       survey
-      | uuid: created.survey_uuid,
+      | uuid: created.uuid,
         title: created.title,
         questions: created.questions
     }

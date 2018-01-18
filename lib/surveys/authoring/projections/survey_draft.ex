@@ -1,9 +1,9 @@
-defmodule Surveys.Authoring.Projections.SurveyDraft do
+defmodule Surveys.Authoring.Projections.Survey do
   use Ecto.Schema
 
   @primary_key {:uuid, :binary_id, autogenerate: false}
 
-  schema "authoring_survey_drafts" do
+  schema "authoring_surveys" do
     field(:title, :string)
     field(:questions, {:array, :map})
 

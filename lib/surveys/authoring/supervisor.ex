@@ -8,8 +8,11 @@ defmodule Surveys.Authoring.Supervisor do
   end
 
   def init(_arg) do
-    Supervisor.init([
-      Authoring.Projectors.SurveyDraft
-    ], strategy: :one_for_one)
+    Supervisor.init(
+      [
+        Authoring.Projectors.Survey
+      ],
+      strategy: :one_for_one
+    )
   end
 end
