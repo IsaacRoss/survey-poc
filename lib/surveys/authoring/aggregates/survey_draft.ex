@@ -14,6 +14,7 @@ defmodule Surveys.Authoring.Aggregates.SurveyDraft do
   """
   def execute(%SurveyDraft{uuid: nil}, %CreateSurvey{} = create) do
     %SurveyCreated{
+      survey_uuid: create.survey_uuid,
       title: create.title,
       questions: create.questions
     }
@@ -21,6 +22,11 @@ defmodule Surveys.Authoring.Aggregates.SurveyDraft do
 
   # Mutate existing draft state
   def apply(%SurveyDraft{} = survey, %SurveyCreated{} = created) do
-    %SurveyDraft{survey | uuid: created.uuid, title: created.title, questions: created.questions}
+    %SurveyDraft{
+      survey
+      | uuid: created.survey_uuid,
+        title: created.title,
+        questions: created.questions
+    }
   end
 end

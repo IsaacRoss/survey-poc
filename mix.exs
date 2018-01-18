@@ -38,6 +38,8 @@ defmodule Surveys.Mixfile do
       {:commanded, "~> 0.15.1"},
       {:commanded_eventstore_adapter, "~> 0.3.0"},
       {:phoenix_ecto, "~> 3.2"},
+      {:commanded_ecto_projections, "~> 0.6"},
+      {:exconstructor, "~> 1.1"},
       {:ex_machina, "~> 2.0", only: :test},
       {:uuid, "~> 1.1"},
       {:postgrex, ">= 0.0.0"},
@@ -54,6 +56,7 @@ defmodule Surveys.Mixfile do
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
     [
+      "event_store.reset": ["event_store.drop", "event_store.create", "event_store.init"],
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate", "test"]

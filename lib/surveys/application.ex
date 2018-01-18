@@ -11,9 +11,11 @@ defmodule Surveys.Application do
       # Start the Ecto repository
       supervisor(Surveys.Repo, []),
       # Start the endpoint when the application starts
-      supervisor(SurveysWeb.Endpoint, [])
+      supervisor(SurveysWeb.Endpoint, []),
       # Start your own worker by calling: Surveys.Worker.start_link(arg1, arg2, arg3)
-      # worker(Surveys.Worker, [arg1, arg2, arg3]),
+      #
+      # Start Authoring Supervisor for Projections
+      supervisor(Surveys.Authoring.Supervisor, []),
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
