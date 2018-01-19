@@ -40,6 +40,7 @@ defmodule Surveys.Mixfile do
       {:phoenix_ecto, "~> 3.2"},
       {:commanded_ecto_projections, "~> 0.6"},
       {:exconstructor, "~> 1.1"},
+      {:vex, "~> 0.6.0"},
       {:ex_machina, "~> 2.0", only: :test},
       {:uuid, "~> 1.1"},
       {:postgrex, ">= 0.0.0"},

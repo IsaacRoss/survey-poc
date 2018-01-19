@@ -7,5 +7,7 @@ defmodule SurveysWeb.Router do
 
   scope "/api", SurveysWeb do
     pipe_through(:api)
+
+    post("/survey", SurveyController, :create)
   end
 end

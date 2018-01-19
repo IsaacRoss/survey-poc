@@ -1,12 +1,8 @@
 defmodule SurveysWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :surveys
 
-  socket("/socket", SurveysWeb.UserSocket)
+  # socket("/socket", SurveysWeb.UserSocket)
 
-  # Serve at "/" the static files from "priv/static" directory.
-  #
-  # You should set gzip to true if you are running phoenix.digest
-  # when deploying your static files in production.
   plug(
     Plug.Static,
     at: "/",
