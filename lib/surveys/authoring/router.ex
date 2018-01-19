@@ -3,6 +3,9 @@ defmodule Surveys.Router do
 
   alias Surveys.Authoring.Aggregates.Survey
   alias Surveys.Authoring.Commands.{CreateSurvey, ChangeStatus}
+  alias Surveys.Middleware.Validate
+
+  middleware(Validate)
 
   dispatch(
     [

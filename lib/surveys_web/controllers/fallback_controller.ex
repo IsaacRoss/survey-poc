@@ -12,6 +12,12 @@ defmodule SurveysWeb.FallbackController do
     |> render(SurveysWeb.ChangesetView, "error.json", changeset: changeset)
   end
 
+  def call(conn, {:error, :validation_failure, errors}) do
+    conn
+    |> put_status(:unprocessable_entity)
+    |> render(SurveysWeb.ValidationView, "error.json", errors: errors)
+  end
+
   def call(conn, {:error, :not_found}) do
     conn
     |> put_status(:not_found)

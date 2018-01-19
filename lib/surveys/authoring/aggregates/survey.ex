@@ -22,6 +22,9 @@ defmodule Surveys.Authoring.Aggregates.Survey do
     }
   end
 
+  @doc """
+  Change the status of a survey
+  """
   def execute(%Survey{}, %ChangeStatus{} = change) do
     %StatusChanged{
       uuid: change.uuid,

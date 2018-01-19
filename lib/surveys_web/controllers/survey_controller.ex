@@ -4,6 +4,8 @@ defmodule SurveysWeb.SurveyController do
   alias Surveys.Authoring
   alias Surveys.Authoring.Projections.Survey
 
+  action_fallback(SurveysWeb.FallbackController)
+
   def create(conn, %{"survey" => survey_params}) do
     with {:ok, %Survey{} = survey} <- Authoring.create_survey(survey_params) do
       conn
