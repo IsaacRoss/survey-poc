@@ -1,6 +1,7 @@
 defmodule Surveys.Authoring.Commands.CreateSurvey do
   defstruct uuid: "",
             title: "",
+            status: "DRAFT",
             questions: []
 
   use ExConstructor

@@ -6,6 +6,7 @@ defmodule Surveys.Authoring.Projections.Survey do
   schema "authoring_surveys" do
     field(:title, :string)
     field(:questions, {:array, :map})
+    field(:status, :string)
 
     timestamps()
   end
