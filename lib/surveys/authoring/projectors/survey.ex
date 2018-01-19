@@ -16,10 +16,15 @@ defmodule Surveys.Authoring.Projectors.Survey do
     })
   end
 
-  project %StatusChanged{} = changed do
-    Ecto.Multi.insert(multi, :survey, %Survey{
-      uuid: changed.uuid,
-      status: changed.status
-    })
+  project %StatusChanged{uuid: uuid, status: status} = changed do
+    update_survey(multi, uuid, status: status)
+  end
+
+  defp update_survey(multi, uuid, changes) do
+    Ecto.Multi.update_all(multi, :survey, survey_query(uuid), set: changes)
+  end
+
+  defp survey_query(uuid) do
+    from(s in Survey, where: s.uuid == ^uuid)
   end
 end

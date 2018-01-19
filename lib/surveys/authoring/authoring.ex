@@ -21,14 +21,14 @@ defmodule Surveys.Authoring do
     end
   end
 
-  def change_status(attrs \\ {}) do
+  def change_status(survey_attrs, status) do
     changed_survey =
-      attrs
+      survey_attrs
       |> ChangeStatus.new()
-      |> ChangeStatus.change_status("PUBLISHED")
+      |> ChangeStatus.change_status(status)
 
     with :ok <- Router.dispatch(changed_survey, consistency: :strong) do
-      {:ok, "THIS WORKED"}
+      get(Survey, changed_survey.uuid)
     else
       reply -> reply
     end

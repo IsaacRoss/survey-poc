@@ -1,7 +1,9 @@
-defmodule Surveys.Authoring.Events.StatusChanged do
+defmodule Surveys.Authoring.Events.SurveyCreated do
   @derive [Poison.Encoder]
   defstruct [
     :uuid,
-    :status
+    :title,
+    :status,
+    :questions
   ]
 end
