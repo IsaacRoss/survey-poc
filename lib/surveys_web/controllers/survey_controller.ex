@@ -13,4 +13,12 @@ defmodule SurveysWeb.SurveyController do
       |> render("show.json", survey: survey)
     end
   end
+
+  def change_title(conn, %{"uuid" => uuid, "title" => title}) do
+    with {:ok, %Survey{} = survey} <- Authoring.change_title(uuid, title) do
+      conn
+      |> put_status(:created)
+      |> render("show.json", survey: survey)
+    end
+  end
 end

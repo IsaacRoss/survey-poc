@@ -7,8 +7,8 @@ defmodule Surveys.Authoring.Aggregates.Survey do
   ]
 
   alias Surveys.Authoring.Aggregates.Survey
-  alias Surveys.Authoring.Commands.{CreateSurvey, ChangeStatus}
-  alias Surveys.Authoring.Events.{SurveyCreated, StatusChanged}
+  alias Surveys.Authoring.Commands.{CreateSurvey, ChangeStatus, ChangeTitle}
+  alias Surveys.Authoring.Events.{SurveyCreated, StatusChanged, TitleChanged}
 
   @doc """
   Create a new survey draft
@@ -48,5 +48,12 @@ defmodule Surveys.Authoring.Aggregates.Survey do
         status: created.status,
         questions: created.questions
     }
+  end
+
+  def apply(%Survey{} = survey, %TitleChanged{} = changed) do
+    %Survey{
+      survey | title: changed.title
+    }
+
   end
 end

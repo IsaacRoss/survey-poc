@@ -34,6 +34,19 @@ defmodule Surveys.Authoring do
     end
   end
 
+  def change_title(survey_attrs, title) do
+    changed_survey =
+      survey_attrs
+      |> ChangeTitle.new()
+      |> ChangeTitle.change_title(title)
+
+    with :ok <- Router.dispatch(changed_survey, consistency: :strong) do
+      get(Survey, changed_survey.uuid)
+    else
+      reply -> reply
+    end
+  end
+
   defp get(schema, uuid) do
     case Repo.get(schema, uuid) do
       nil -> {:error, :not_found}

@@ -4,7 +4,7 @@ defmodule Surveys.Authoring.Projectors.Survey do
     repo: Surveys.Repo,
     consistency: :strong
 
-  alias Surveys.Authoring.Events.{SurveyCreated, StatusChanged}
+  alias Surveys.Authoring.Events.{SurveyCreated, StatusChanged, TitleChanged}
   alias Surveys.Authoring.Projections.Survey
 
   project %SurveyCreated{} = created do
@@ -18,6 +18,10 @@ defmodule Surveys.Authoring.Projectors.Survey do
 
   project %StatusChanged{uuid: uuid, status: status} = changed do
     update_survey(multi, uuid, status: status)
+  end
+
+  project %TitleChanged{uuid: uuid, title: title} = changed do
+    update_survey(multi, uuid, title: title)
   end
 
   defp update_survey(multi, uuid, changes) do
