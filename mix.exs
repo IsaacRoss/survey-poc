@@ -45,7 +45,8 @@ defmodule Surveys.Mixfile do
       {:uuid, "~> 1.1"},
       {:postgrex, ">= 0.0.0"},
       {:gettext, "~> 0.11"},
-      {:cowboy, "~> 1.0"}
+      {:cowboy, "~> 1.0"},
+      {:mix_test_watch, "~> 0.5.0"}
     ]
   end
 

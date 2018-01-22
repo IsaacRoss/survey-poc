@@ -3,6 +3,9 @@ defmodule Surveys.Router do
 
   alias Surveys.Authoring.Aggregates.Survey
   alias Surveys.Authoring.Commands.{CreateSurvey, ChangeStatus}
+  alias Surveys.ContactManagement.Aggregates.Contact
+  alias Surveys.ContactManagement.Commands.{CreateContact, DeleteContact}
+
   alias Surveys.Middleware.Validate
 
   middleware(Validate)
@@ -15,4 +18,14 @@ defmodule Surveys.Router do
     to: Survey,
     identity: :uuid
   )
+
+  dispatch(
+    [
+      CreateContact,
+      DeleteContact
+    ],
+    to: Contact,
+    identity: :uuid
+  )
+
 end

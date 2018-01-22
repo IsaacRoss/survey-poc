@@ -37,10 +37,6 @@ defmodule Surveys.Authoring do
 
   def change_title(survey_attrs, title) do
 
-    IO.puts "322222222222222233333333333333"
-    IO.inspect survey_attrs
-    IO.inspect title
-
     changed_survey =
       survey_attrs
       |> ChangeTitle.new()
