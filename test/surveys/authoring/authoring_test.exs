@@ -3,7 +3,8 @@ defmodule Surveys.Aggregates.SurveyTest do
 
   alias Surveys.Authoring.Aggregates.Survey
   alias Surveys.Authoring.Events.{SurveyCreated, StatusChanged}
-  alias Surveys.Authoring.Commands.{CreateSurvey, ChangeStatus}
+
+  import Surveys.Factory
 
   setup_all do
     {:ok, %{uuid: UUID.uuid4()}}
@@ -11,16 +12,13 @@ defmodule Surveys.Aggregates.SurveyTest do
 
   describe "survey aggregate" do
     # todo make case for this,
-    # todo make factory for this
     test "create survey creates surveycreated event", %{uuid: uuid} do
-      create_survey =
-        %{title: "whatever", questions: []} |> CreateSurvey.new()
-        |> CreateSurvey.assign_uuid(uuid)
+      create_survey = build(:create_survey, uuid: uuid)
 
       expected_event = %SurveyCreated{
         uuid: uuid,
-        questions: [],
-        title: "whatever",
+        questions: [%{title: "whatever"}],
+        title: "My Awesome Survey",
         status: "DRAFT"
       }
 
@@ -28,10 +26,7 @@ defmodule Surveys.Aggregates.SurveyTest do
     end
 
     test "change status emits proper event", %{uuid: uuid} do
-      changed_survey =
-        %{uuid: uuid, title: "whatever", status: "DRAFT", questions: []}
-        |> ChangeStatus.new()
-        |> ChangeStatus.change_status("PUBLISHED")
+      changed_survey = build(:change_status, uuid: uuid, status: "PUBLISHED")
 
       expected_event = %StatusChanged{
         uuid: uuid,

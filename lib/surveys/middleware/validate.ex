@@ -1,5 +1,5 @@
 defmodule Surveys.Middleware.Validate do
-  @behavior Commanded.Middleware
+  @behaviour Commanded.Middleware
 
   alias Commanded.Middleware.Pipeline
   import Pipeline
@@ -24,11 +24,15 @@ defmodule Surveys.Middleware.Validate do
 
   defp merge_errors(errors) do
     errors
-    |> Enum.group_by(fn {_error, field, _validtype, _message} -> field end, fn {_error, _field,
-                                                                                _validtype,
-                                                                                message} ->
-      message
-    end)
+    |> Enum.group_by(&get_field/1, &get_message/1)
     |> Map.new()
+  end
+
+  defp get_field({_error, field, _validtype, _message}) do
+    field
+  end
+
+  defp get_message({_error, _field, _validtype, message}) do
+    message
   end
 end
