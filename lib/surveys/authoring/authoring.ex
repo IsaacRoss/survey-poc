@@ -2,7 +2,7 @@ defmodule Surveys.Authoring do
   @moduledoc """
   The Authoring context.
   """
-  alias Surveys.Authoring.Commands.{CreateSurvey, ChangeStatus}
+  alias Surveys.Authoring.Commands.{CreateSurvey, ChangeStatus, ChangeTitle}
   alias Surveys.Authoring.Projections.Survey
   alias Surveys.{Repo, Router}
 
@@ -22,6 +22,7 @@ defmodule Surveys.Authoring do
   end
 
   def change_status(survey_attrs, status) do
+
     changed_survey =
       survey_attrs
       |> ChangeStatus.new()
@@ -35,6 +36,11 @@ defmodule Surveys.Authoring do
   end
 
   def change_title(survey_attrs, title) do
+
+    IO.puts "322222222222222233333333333333"
+    IO.inspect survey_attrs
+    IO.inspect title
+
     changed_survey =
       survey_attrs
       |> ChangeTitle.new()

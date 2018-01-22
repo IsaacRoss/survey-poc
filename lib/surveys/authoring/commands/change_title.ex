@@ -6,7 +6,7 @@ defmodule Surveys.Authoring.Commands.ChangeTitle do
 
   alias Surveys.Authoring.Commands.ChangeTitle
 
-  def change_status(%ChangeTitle{} = survey, title) do
+  def change_title(%ChangeTitle{} = survey, title) do
     %{survey | title: title}
   end
 end

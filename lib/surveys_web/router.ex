@@ -10,7 +10,7 @@ defmodule SurveysWeb.Router do
 
     post("/survey", SurveyController, :create)
 
-    put("/survey/title/:title", SurveyController, :change_title)
+    put("/survey/title", SurveyController, :change_title)
 
   end
 end

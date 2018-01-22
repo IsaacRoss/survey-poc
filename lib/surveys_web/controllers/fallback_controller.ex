@@ -23,4 +23,10 @@ defmodule SurveysWeb.FallbackController do
     |> put_status(:not_found)
     |> render(SurveysWeb.ErrorView, :"404")
   end
+
+  def call(conn, {:error, error}) do
+    conn
+    |> put_status(:unprocessable_entity)
+    |> render(SurveysWeb.ErrorView, error)
+  end
 end
