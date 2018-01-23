@@ -1,5 +1,5 @@
 defmodule Surveys.ContactManagement.Commands.CreateContact do
-  defstruct uuid: "",
+  defstruct contact_uuid: "",
             email: ""
 
   use ExConstructor
@@ -8,6 +8,6 @@ defmodule Surveys.ContactManagement.Commands.CreateContact do
   alias Surveys.ContactManagement.Commands.CreateContact
 
   def assign_uuid(%CreateContact{} = created, uuid) do
-    %CreateContact{created | uuid: uuid}
+    %CreateContact{created | contact_uuid: uuid}
   end
 end

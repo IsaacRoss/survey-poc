@@ -28,7 +28,7 @@ defmodule Surveys.Authoring do
       |> ChangeStatus.change_status(status)
 
     with :ok <- Router.dispatch(changed_survey, consistency: :strong) do
-      get(Survey, changed_survey.uuid)
+      get(Survey, changed_survey.survey_uuid)
     else
       reply -> reply
     end

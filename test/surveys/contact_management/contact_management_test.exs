@@ -9,15 +9,15 @@ defmodule Surveys.Aggregates.ContactManagementTest do
 
   describe "contact aggregate" do
     test "create contact creates ContactCreated event", %{uuid: uuid} do
-      assert_event(build(:create_contact, uuid: uuid), %ContactCreated{
-        uuid: uuid,
+      assert_event(build(:create_contact, contact_uuid: uuid), %ContactCreated{
+        contact_uuid: uuid,
         email: "contact@taskstream.com"
       })
     end
 
     test "delete contact creates ContactDeleted event", %{uuid: uuid} do
-      assert_event(build(:delete_contact, uuid: uuid), %ContactDeleted{
-        uuid: uuid
+      assert_event(build(:delete_contact, contact_uuid: uuid), %ContactDeleted{
+        contact_uuid: uuid
       })
     end
   end

@@ -1,7 +1,7 @@
 defmodule Surveys.ContactManagement.Events.ContactCreated do
   @derive [Poison.Encoder]
   defstruct [
-    :uuid,
+    :contact_uuid,
     :email
   ]
 end

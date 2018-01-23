@@ -13,21 +13,19 @@ defmodule Surveys.ContactManagement.Aggregates.Contact do
   """
   def execute(%Contact{uuid: nil}, %CreateContact{} = create) do
     %ContactCreated{
-      uuid: create.uuid,
+      contact_uuid: create.contact_uuid,
       email: create.email
     }
   end
 
-  def execute(%Contact{}, %DeleteContact{uuid: uuid}) do
-    %ContactDeleted{uuid: uuid}
+  def execute(%Contact{}, %DeleteContact{contact_uuid: uuid}) do
+    %ContactDeleted{contact_uuid: uuid}
   end
 
   def apply(%Contact{} = contact, %ContactCreated{} = created) do
-    IO.inspect(contact)
-
     %Contact{
       contact
-      | uuid: created.uuid,
+      | uuid: created.contact_uuid,
         email: created.email
     }
   end
@@ -35,7 +33,7 @@ defmodule Surveys.ContactManagement.Aggregates.Contact do
   def apply(%Contact{} = contact, %ContactDeleted{} = deleted) do
     %Contact{
       contact
-      | uuid: deleted.uuid
+      | uuid: deleted.contact_uuid
     }
   end
 end

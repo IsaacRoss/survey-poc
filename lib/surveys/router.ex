@@ -11,6 +11,7 @@ defmodule Surveys.Router do
   middleware(Validate)
 
   identify(Survey, by: :survey_uuid, prefix: "survey-")
+  identify(Contact, by: :contact_uuid, prefix: "contact-")
 
   dispatch(
     [
@@ -25,7 +26,6 @@ defmodule Surveys.Router do
       CreateContact,
       DeleteContact
     ],
-    to: Contact,
-    identity: :uuid
+    to: Contact
   )
 end

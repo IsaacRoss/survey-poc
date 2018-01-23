@@ -1,5 +1,5 @@
 defmodule Surveys.ContactManagement.Commands.DeleteContact do
-  defstruct uuid: ""
+  defstruct contact_uuid: ""
 
   use ExConstructor
   use Vex.Struct
@@ -7,6 +7,6 @@ defmodule Surveys.ContactManagement.Commands.DeleteContact do
   alias Surveys.ContactManagement.Commands.DeleteContact
 
   def assign_uuid(%DeleteContact{} = deleted, uuid) do
-    %DeleteContact{deleted | uuid: uuid}
+    %DeleteContact{deleted | contact_uuid: uuid}
   end
 end

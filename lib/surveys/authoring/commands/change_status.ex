@@ -3,6 +3,9 @@ defmodule Surveys.Authoring.Commands.ChangeStatus do
             status: ""
 
   use ExConstructor
+  use Vex.Struct
+
+  validates(:status, inclusion: ["PUBLISHED", "DRAFT"])
 
   alias Surveys.Authoring.Commands.ChangeStatus
 

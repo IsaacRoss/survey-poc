@@ -9,14 +9,14 @@ defmodule Surveys.ContactManagement.Projectors.Contact do
 
   project %ContactCreated{} = created do
     Ecto.Multi.insert(multi, :contact, %Contact{
-      uuid: created.uuid,
+      uuid: created.contact_uuid,
       email: created.email
     })
   end
 
   project %ContactDeleted{} = deleted do
     Ecto.Multi.delete(multi, :contact, %Contact{
-      uuid: deleted.uuid
+      uuid: deleted.contact_uuid
     })
   end
 end
