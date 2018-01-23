@@ -25,4 +25,4 @@ config :surveys, Surveys.Repo,
   password: "postgres",
   database: "surveys_readstore_test",
   hostname: "localhost",
-  pool: Ecto.Adapters.SQL.Sandbox
+  pool_size: 1

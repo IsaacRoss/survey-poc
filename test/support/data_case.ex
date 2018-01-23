@@ -21,16 +21,21 @@ defmodule Surveys.DataCase do
       import Ecto
       import Ecto.Changeset
       import Ecto.Query
+      import Surveys.Factory
       import Surveys.DataCase
     end
   end
 
-  setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Surveys.Repo)
+  setup do
+    Application.stop(:surveys)
+    Application.stop(:commanded)
+    Application.stop(:eventstore)
 
-    unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Surveys.Repo, {:shared, self()})
-    end
+    # Get and parse config, start OTP app, delete shit
+    reset_eventstore()
+    reset_readstore()
+
+    Application.ensure_all_started(:surveys)
 
     :ok
   end
@@ -49,5 +54,32 @@ defmodule Surveys.DataCase do
         String.replace(acc, "%{#{key}}", to_string(value))
       end)
     end)
+  end
+
+  # https://hexdocs.pm/eventstore/EventStore.Storage.html#reset!/0
+  defp reset_eventstore do
+    {:ok, conn} =
+      EventStore.configuration()
+      |> EventStore.Config.parse()
+      |> Postgrex.start_link()
+
+    EventStore.Storage.Initializer.reset!(conn)
+  end
+
+  defp reset_readstore do
+    readstore_config = Application.get_env(:surveys, Surveys.Repo)
+    {:ok, conn} = Postgrex.start_link(readstore_config)
+
+    Postgrex.query!(conn, truncate_tables(), [])
+  end
+
+  defp truncate_tables do
+    """
+    TRUNCATE TABLE
+    authoring_surveys,
+    contact_management
+
+    RESTART IDENTITY;
+    """
   end
 end
