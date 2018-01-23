@@ -9,18 +9,18 @@ defmodule Surveys.Authoring.Projectors.Survey do
 
   project %SurveyCreated{} = created do
     Ecto.Multi.insert(multi, :survey, %Survey{
-      uuid: created.uuid,
+      uuid: created.survey_uuid,
       title: created.title,
       status: created.status,
       questions: created.questions
     })
   end
 
-  project %StatusChanged{uuid: uuid, status: status} = changed do
+  project %StatusChanged{survey_uuid: uuid, status: status} = changed do
     update_survey(multi, uuid, status: status)
   end
 
-  project %TitleChanged{uuid: uuid, title: title} = changed do
+  project %TitleChanged{survey_uuid: uuid, title: title} = changed do
     update_survey(multi, uuid, title: title)
   end
 

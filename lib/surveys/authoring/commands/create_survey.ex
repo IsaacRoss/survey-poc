@@ -1,5 +1,5 @@
 defmodule Surveys.Authoring.Commands.CreateSurvey do
-  defstruct uuid: "",
+  defstruct survey_uuid: "",
             title: "",
             status: "DRAFT",
             questions: []
@@ -16,6 +16,6 @@ defmodule Surveys.Authoring.Commands.CreateSurvey do
   assigns unique identifier to created survey
   """
   def assign_uuid(%CreateSurvey{} = created, uuid) do
-    %CreateSurvey{created | uuid: uuid}
+    %CreateSurvey{created | survey_uuid: uuid}
   end
 end

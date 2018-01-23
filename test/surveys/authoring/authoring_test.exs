@@ -10,8 +10,8 @@ defmodule Surveys.Aggregates.SurveyTest do
   describe "survey aggregate" do
     # todo make case for this,
     test "create survey creates surveycreated event", %{uuid: uuid} do
-      assert_event(build(:create_survey, uuid: uuid), %SurveyCreated{
-        uuid: uuid,
+      assert_event(build(:create_survey, survey_uuid: uuid), %SurveyCreated{
+        survey_uuid: uuid,
         questions: [%{title: "whatever"}],
         title: "My Awesome Survey",
         status: "DRAFT"
@@ -19,8 +19,8 @@ defmodule Surveys.Aggregates.SurveyTest do
     end
 
     test "change status emits proper event", %{uuid: uuid} do
-      assert_event(build(:change_status, uuid: uuid, status: "PUBLISHED"), %StatusChanged{
-        uuid: uuid,
+      assert_event(build(:change_status, survey_uuid: uuid, status: "PUBLISHED"), %StatusChanged{
+        survey_uuid: uuid,
         status: "PUBLISHED"
       })
     end

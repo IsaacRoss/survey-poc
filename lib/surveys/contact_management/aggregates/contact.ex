@@ -18,7 +18,13 @@ defmodule Surveys.ContactManagement.Aggregates.Contact do
     }
   end
 
+  def execute(%Contact{}, %DeleteContact{uuid: uuid}) do
+    %ContactDeleted{uuid: uuid}
+  end
+
   def apply(%Contact{} = contact, %ContactCreated{} = created) do
+    IO.inspect(contact)
+
     %Contact{
       contact
       | uuid: created.uuid,
@@ -32,5 +38,4 @@ defmodule Surveys.ContactManagement.Aggregates.Contact do
       | uuid: deleted.uuid
     }
   end
-
 end

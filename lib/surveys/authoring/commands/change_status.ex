@@ -1,5 +1,5 @@
 defmodule Surveys.Authoring.Commands.ChangeStatus do
-  defstruct uuid: "",
+  defstruct survey_uuid: "",
             status: ""
 
   use ExConstructor

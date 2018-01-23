@@ -1,5 +1,5 @@
 defmodule Surveys.Authoring.Commands.ChangeTitle do
-  defstruct uuid: "",
+  defstruct survey_uuid: "",
             title: ""
 
   use ExConstructor

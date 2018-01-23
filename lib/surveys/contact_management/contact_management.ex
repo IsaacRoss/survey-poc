@@ -3,7 +3,7 @@ defmodule Surveys.ContactManagement do
   The Contact Management context
   """
 
-  alias Surveys.ContactManagement.Commands.CreateContact
+  alias Surveys.ContactManagement.Commands.{CreateContact, DeleteContact}
   alias Surveys.ContactManagement.Projections.Contact
   alias Surveys.{Repo, Router}
 
@@ -22,11 +22,17 @@ defmodule Surveys.ContactManagement do
     end
   end
 
+  def delete_contact(uuid) do
+    %{}
+    |> DeleteContact.new()
+    |> DeleteContact.assign_uuid(uuid)
+    |> Router.dispatch()
+  end
+
   defp get(schema, uuid) do
     case Repo.get(schema, uuid) do
       nil -> {:error, :not_found}
       projection -> {:ok, projection}
     end
   end
-
 end

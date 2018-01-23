@@ -15,7 +15,7 @@ defmodule Surveys.Authoring.Aggregates.Survey do
   """
   def execute(%Survey{uuid: nil}, %CreateSurvey{} = create) do
     %SurveyCreated{
-      uuid: create.uuid,
+      survey_uuid: create.survey_uuid,
       title: create.title,
       status: create.status,
       questions: create.questions
@@ -27,7 +27,7 @@ defmodule Surveys.Authoring.Aggregates.Survey do
   """
   def execute(%Survey{}, %ChangeStatus{} = change) do
     %StatusChanged{
-      uuid: change.uuid,
+      survey_uuid: change.survey_uuid,
       status: change.status
     }
   end
@@ -43,7 +43,7 @@ defmodule Surveys.Authoring.Aggregates.Survey do
   def apply(%Survey{} = survey, %SurveyCreated{} = created) do
     %Survey{
       survey
-      | uuid: created.uuid,
+      | uuid: created.survey_uuid,
         title: created.title,
         status: created.status,
         questions: created.questions
@@ -52,8 +52,8 @@ defmodule Surveys.Authoring.Aggregates.Survey do
 
   def apply(%Survey{} = survey, %TitleChanged{} = changed) do
     %Survey{
-      survey | title: changed.title
+      survey
+      | title: changed.title
     }
-
   end
 end

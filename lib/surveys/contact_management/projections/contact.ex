@@ -6,7 +6,5 @@ defmodule Surveys.ContactManagement.Projections.Contact do
   schema "contact_management" do
     field(:email)
     timestamps()
-
   end
-
 end

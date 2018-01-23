@@ -1,7 +1,7 @@
 defmodule Surveys.Authoring.Events.TitleChanged do
   @derive [Poison.Encoder]
   defstruct [
-    :uuid,
+    :survey_uuid,
     :title
   ]
 end

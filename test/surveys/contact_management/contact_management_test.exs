@@ -15,15 +15,10 @@ defmodule Surveys.Aggregates.ContactManagementTest do
       })
     end
 
-    # test "delete contact creates ContactDeleted event", %{uuid: uuid} do
-    #   delete_contact = build(:delete_contact, uuid: uuid)
-    #
-    #   expected_event = %ContactDeleted{
-    #     uuid: uuid
-    #   }
-    #
-    #   assert expected_event ==
-    #     Contact.execute(%Contact{}, delete_contact)
-    #   end
+    test "delete contact creates ContactDeleted event", %{uuid: uuid} do
+      assert_event(build(:delete_contact, uuid: uuid), %ContactDeleted{
+        uuid: uuid
+      })
+    end
   end
 end

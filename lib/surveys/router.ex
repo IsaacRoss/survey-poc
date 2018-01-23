@@ -10,13 +10,14 @@ defmodule Surveys.Router do
 
   middleware(Validate)
 
+  identify(Survey, by: :survey_uuid, prefix: "survey-")
+
   dispatch(
     [
       CreateSurvey,
       ChangeStatus
     ],
-    to: Survey,
-    identity: :uuid
+    to: Survey
   )
 
   dispatch(
@@ -27,5 +28,4 @@ defmodule Surveys.Router do
     to: Contact,
     identity: :uuid
   )
-
 end

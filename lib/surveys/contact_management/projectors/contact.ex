@@ -16,9 +16,7 @@ defmodule Surveys.ContactManagement.Projectors.Contact do
 
   project %ContactDeleted{} = deleted do
     Ecto.Multi.delete(multi, :contact, %Contact{
-      uuid: deleted.uuid,
+      uuid: deleted.uuid
     })
   end
-
-
 end

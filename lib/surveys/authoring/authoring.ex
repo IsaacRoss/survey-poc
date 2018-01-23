@@ -22,7 +22,6 @@ defmodule Surveys.Authoring do
   end
 
   def change_status(survey_attrs, status) do
-
     changed_survey =
       survey_attrs
       |> ChangeStatus.new()
@@ -36,7 +35,6 @@ defmodule Surveys.Authoring do
   end
 
   def change_title(survey_attrs, title) do
-
     changed_survey =
       survey_attrs
       |> ChangeTitle.new()
