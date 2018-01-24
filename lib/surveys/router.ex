@@ -26,6 +26,7 @@ defmodule Surveys.Router do
       CreateContact,
       DeleteContact
     ],
-    to: Contact
+    to: Contact,
+    lifespan: Contact
   )
 end

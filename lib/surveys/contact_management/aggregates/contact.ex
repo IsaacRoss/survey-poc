@@ -1,4 +1,5 @@
 defmodule Surveys.ContactManagement.Aggregates.Contact do
+  @behaviour Commanded.Aggregates.AggregateLifespan
   defstruct [
     :uuid,
     :email
@@ -21,6 +22,10 @@ defmodule Surveys.ContactManagement.Aggregates.Contact do
   def execute(%Contact{}, %DeleteContact{contact_uuid: uuid}) do
     %ContactDeleted{contact_uuid: uuid}
   end
+
+  # Ask me to explain this tomorrow!
+  def after_command(%DeleteContact{}), do: 0
+  def after_command(_), do: :infinity
 
   def apply(%Contact{} = contact, %ContactCreated{} = created) do
     %Contact{
