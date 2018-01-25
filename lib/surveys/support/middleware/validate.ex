@@ -1,4 +1,4 @@
-defmodule Surveys.Middleware.Validate do
+defmodule Surveys.Support.Middleware.Validate do
   @behaviour Commanded.Middleware
 
   alias Commanded.Middleware.Pipeline

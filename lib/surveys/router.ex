@@ -6,7 +6,7 @@ defmodule Surveys.Router do
   alias Surveys.ContactManagement.Aggregates.Contact
   alias Surveys.ContactManagement.Commands.{CreateContact, DeleteContact}
 
-  alias Surveys.Middleware.Validate
+  alias Surveys.Support.Middleware.Validate
 
   middleware(Validate)
 

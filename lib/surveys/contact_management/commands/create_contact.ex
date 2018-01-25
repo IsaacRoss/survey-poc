@@ -9,6 +9,8 @@ defmodule Surveys.ContactManagement.Commands.CreateContact do
   use ExConstructor
   use Vex.Struct
 
+  validates(:contact_uuid, uuid: true)
+
   validates(:username, by: &String.valid?(&1))
 
   validates(
