@@ -6,6 +6,7 @@ defmodule Surveys.ContactManagement do
   alias Surveys.ContactManagement.Commands.{CreateContact, DeleteContact}
   alias Surveys.ContactManagement.Projections.Contact
   alias Surveys.{Repo, Router}
+  import Ecto.Query
 
   def create_contact(attrs \\ {}) do
     uuid = UUID.uuid4()
@@ -14,6 +15,7 @@ defmodule Surveys.ContactManagement do
       attrs
       |> CreateContact.new()
       |> CreateContact.assign_uuid(uuid)
+      |> CreateContact.downcase_email()
 
     with :ok <- Router.dispatch(created_contact, consistency: :strong) do
       get(Contact, uuid)
@@ -27,6 +29,16 @@ defmodule Surveys.ContactManagement do
     |> DeleteContact.new()
     |> DeleteContact.assign_uuid(uuid)
     |> Router.dispatch()
+  end
+
+  def contact_by_email(email) do
+    email
+    |> contact_by_email_query
+    |> Repo.one()
+  end
+
+  defp contact_by_email_query(email) do
+    from(c in Contact, where: c.email == ^email)
   end
 
   defp get(schema, uuid) do

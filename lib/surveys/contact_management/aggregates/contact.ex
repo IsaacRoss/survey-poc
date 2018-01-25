@@ -2,7 +2,8 @@ defmodule Surveys.ContactManagement.Aggregates.Contact do
   @behaviour Commanded.Aggregates.AggregateLifespan
   defstruct [
     :uuid,
-    :email
+    :email,
+    :username
   ]
 
   alias Surveys.ContactManagement.Aggregates.Contact
