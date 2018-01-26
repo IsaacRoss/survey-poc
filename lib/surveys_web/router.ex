@@ -13,6 +13,5 @@ defmodule SurveysWeb.Router do
     put("/survey/title", SurveyController, :change_title)
 
     post("/contact", ContactController, :create)
-
   end
 end

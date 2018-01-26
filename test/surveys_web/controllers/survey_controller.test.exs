@@ -1,2 +1,0 @@
-defmodule SurveysWeb.SurveyControllerTest do
-end

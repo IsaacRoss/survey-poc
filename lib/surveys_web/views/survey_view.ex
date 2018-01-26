@@ -11,6 +11,6 @@ defmodule SurveysWeb.SurveyView do
   end
 
   def render("survey.json", %{survey: survey}) do
-    %{id: survey.uuid, title: survey.title, questions: survey.questions}
+    %{title: survey.title, questions: survey.questions}
   end
 end
