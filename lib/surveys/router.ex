@@ -2,7 +2,7 @@ defmodule Surveys.Router do
   use Commanded.Commands.Router
 
   alias Surveys.Authoring.Aggregates.Survey
-  alias Surveys.Authoring.Commands.{CreateSurvey, ChangeStatus}
+  alias Surveys.Authoring.Commands.{CreateSurvey, ChangeStatus, UpdateSurvey}
   alias Surveys.ContactManagement.Aggregates.Contact
   alias Surveys.ContactManagement.Commands.{CreateContact, DeleteContact}
 
@@ -16,7 +16,8 @@ defmodule Surveys.Router do
   dispatch(
     [
       CreateSurvey,
-      ChangeStatus
+      ChangeStatus,
+      UpdateSurvey
     ],
     to: Survey
   )

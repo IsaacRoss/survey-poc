@@ -14,10 +14,12 @@ defmodule SurveysWeb.SurveyController do
     end
   end
 
-  def change_title(conn, %{"survey" => survey_params, "title" => title}) do
-    with {:ok, %Survey{} = survey} <- Authoring.change_title(survey_params, title) do
+  def update(conn, %{"uuid" => survey_uuid, "survey" => updated_survey}) do
+    updated = %Survey{uuid: survey_uuid}
+
+    with {:ok, %Survey{} = survey} <- Authoring.update_survey(updated, updated_survey) do
       conn
-      |> put_status(:created)
+      |> put_status(:ok)
       |> render("show.json", survey: survey)
     end
   end

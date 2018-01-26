@@ -7,7 +7,7 @@ defmodule Surveys.Authoring.Aggregates.Survey do
   ]
 
   alias Surveys.Authoring.Aggregates.Survey
-  alias Surveys.Authoring.Commands.{CreateSurvey, ChangeStatus, ChangeTitle}
+  alias Surveys.Authoring.Commands.{CreateSurvey, ChangeStatus, ChangeTitle, UpdateSurvey}
   alias Surveys.Authoring.Events.{SurveyCreated, StatusChanged, TitleChanged}
 
   @doc """
@@ -32,6 +32,15 @@ defmodule Surveys.Authoring.Aggregates.Survey do
     }
   end
 
+  def execute(%Survey{} = survey, %UpdateSurvey{} = update) do
+    Enum.reduce([&title_changed/2, &status_changed/2], [], fn change, events ->
+      case change.(survey, update) do
+        nil -> events
+        event -> [event | events]
+      end
+    end)
+  end
+
   # Mutate existing draft state
   def apply(%Survey{} = survey, %StatusChanged{} = changed) do
     %Survey{
@@ -54,6 +63,27 @@ defmodule Surveys.Authoring.Aggregates.Survey do
     %Survey{
       survey
       | title: changed.title
+    }
+  end
+
+  ####### HELPERS
+  defp title_changed(%Survey{}, %UpdateSurvey{title: ""}), do: nil
+  defp title_changed(%Survey{title: title}, %UpdateSurvey{title: title}), do: nil
+
+  defp title_changed(%Survey{uuid: survey_uuid}, %UpdateSurvey{title: title}) do
+    %TitleChanged{
+      survey_uuid: survey_uuid,
+      title: title
+    }
+  end
+
+  defp status_changed(%Survey{}, %UpdateSurvey{status: ""}), do: nil
+  defp status_changed(%Survey{status: status}, %UpdateSurvey{status: status}), do: nil
+
+  defp status_changed(%Survey{uuid: survey_uuid}, %UpdateSurvey{status: status}) do
+    %StatusChanged{
+      survey_uuid: survey_uuid,
+      status: status
     }
   end
 end

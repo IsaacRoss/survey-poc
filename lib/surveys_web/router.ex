@@ -9,8 +9,7 @@ defmodule SurveysWeb.Router do
     pipe_through(:api)
 
     post("/survey", SurveyController, :create)
-
-    put("/survey/title", SurveyController, :change_title)
+    put("/survey/:uuid", SurveyController, :update)
 
     post("/contact", ContactController, :create)
   end

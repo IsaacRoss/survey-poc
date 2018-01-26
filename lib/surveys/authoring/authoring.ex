@@ -2,7 +2,7 @@ defmodule Surveys.Authoring do
   @moduledoc """
   The Authoring context.
   """
-  alias Surveys.Authoring.Commands.{CreateSurvey, ChangeStatus, ChangeTitle}
+  alias Surveys.Authoring.Commands.{CreateSurvey, ChangeStatus, ChangeTitle, UpdateSurvey}
   alias Surveys.Authoring.Projections.Survey
   alias Surveys.{Repo, Router}
 
@@ -16,6 +16,22 @@ defmodule Surveys.Authoring do
 
     with :ok <- Router.dispatch(created_survey, consistency: :strong) do
       get(Survey, uuid)
+    else
+      reply -> reply
+    end
+  end
+
+  @doc """
+  Updates the title and / or questions and / or status of a survey
+  """
+  def update_survey(%Survey{uuid: survey_uuid} = survey, attrs \\ %{}) do
+    update_survey =
+      attrs
+      |> UpdateSurvey.new()
+      |> UpdateSurvey.assign_survey(survey)
+
+    with :ok <- Router.dispatch(update_survey, consistency: :strong) do
+      get(Survey, update_survey.survey_uuid)
     else
       reply -> reply
     end

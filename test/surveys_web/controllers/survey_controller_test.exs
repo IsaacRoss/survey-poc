@@ -12,10 +12,8 @@ defmodule SurveysWeb.SurveyControllerTest do
       conn = post(conn, survey_path(conn, :create), survey: @valid_survey_attrs)
       json = json_response(conn, 201)["data"]
 
-      assert json == %{
-               "title" => "My Awesome Survey",
-               "questions" => [%{"title" => "whatever"}]
-             }
+      assert Map.get(json, "title") == "My Awesome Survey"
+      assert Map.get(json, "questions") == [%{"title" => "whatever"}]
     end
   end
 end
