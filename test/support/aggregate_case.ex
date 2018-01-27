@@ -6,28 +6,39 @@ defmodule Surveys.AggregateCase do
       @aggregate_module aggregate
       import Surveys.Factory
 
-      defp assert_event(command, expected_event) do
-        # _agg, unused for now, is the aggregate after event has been applied to
-        # it, This will probably be useful for testing more complex aggregates
-        # in the future.
-        {_agg, event, error} = execute(command)
+      defp assert_events(commands, expected_events) do
+        assert_events(%@aggregate_module{}, commands, expected_events)
+      end
 
-        # assert there are no errors
+      defp assert_events(aggregate, commands, expected_events) do
+        {_agg, events, error} = execute(commands, aggregate)
+
         assert is_nil(error)
-
-        # assert expected event matches up
-        assert expected_event == event
+        assert List.wrap(events) == expected_events
       end
 
-      defp execute(command) do
-        case @aggregate_module.execute(%@aggregate_module{}, command) do
-          {:error, reason} = error -> {%@aggregate_module{}, nil, error}
-          event -> {apply(event), event, nil}
-        end
+      defp execute(commands, aggregate \\ %@aggregate_module{})
+
+      defp execute(commands, aggregate) do
+        commands
+        |> List.wrap()
+        |> Enum.reduce({aggregate, [], nil}, fn
+          command, {aggregate, _events, nil} ->
+            case @aggregate_module.execute(aggregate, command) do
+              {:error, reason} = error -> {aggregate, nil, error}
+              events -> {evolve(aggregate, events), events, nil}
+            end
+
+          command, {aggregate, _events, _error} = reply ->
+            reply
+        end)
       end
 
-      defp apply(event) do
-        @aggregate_module.apply(%@aggregate_module{}, event)
+      # apply the given events to the aggregate state
+      defp evolve(aggregate, events) do
+        events
+        |> List.wrap()
+        |> Enum.reduce(aggregate, &@aggregate_module.apply(&2, &1))
       end
     end
   end

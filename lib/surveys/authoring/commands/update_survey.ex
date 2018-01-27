@@ -29,6 +29,6 @@ defmodule Surveys.Authoring.Commands.UpdateSurvey do
 
   def map_valid(map) do
     len = Map.keys(map) |> Enum.count()
-    is_map(map && len > 0)
+    is_map(map) && len > 0
   end
 end

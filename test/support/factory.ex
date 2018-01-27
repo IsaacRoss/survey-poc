@@ -1,7 +1,7 @@
 defmodule Surveys.Factory do
   use ExMachina
 
-  alias Surveys.Authoring.Commands.{CreateSurvey, ChangeStatus, ChangeTitle}
+  alias Surveys.Authoring.Commands.{CreateSurvey, ChangeStatus, ChangeTitle, UpdateSurvey}
   alias Surveys.ContactManagement.Commands.{CreateContact, DeleteContact}
 
   def survey_factory do
@@ -13,6 +13,10 @@ defmodule Surveys.Factory do
 
   def create_survey_factory do
     struct(CreateSurvey, build(:survey))
+  end
+
+  def update_survey_factory do
+    struct(UpdateSurvey, build(:survey))
   end
 
   def change_status_factory do

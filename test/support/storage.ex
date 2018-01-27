@@ -1,6 +1,5 @@
 defmodule Surveys.Storage do
   def reset! do
-    IO.puts("RESETTING")
     :ok = Application.stop(:surveys)
     :ok = Application.stop(:commanded)
     :ok = Application.stop(:eventstore)
